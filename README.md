@@ -13,7 +13,7 @@ You can run your application in dev mode that enables live coding using:
 
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
 
-## Endtpoints
+## Endpoints
 
 1. GET /fruits - List with all fruits.
 2. POST /fruits - Create a fruits. 
