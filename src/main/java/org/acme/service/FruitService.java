@@ -7,7 +7,9 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.ws.rs.NotFoundException;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.transaction.TransactionIdentifier;
 import org.acme.dto.FruitFormDTO;
 import org.acme.model.Fruit;
@@ -38,5 +40,25 @@ public final class FruitService {
         newFruit.persist();
 
         return newFruit;
+    }
+    @Transactional
+    public void delete(Long id) {
+        if (!Fruit.deleteById(id)){
+            throw new NotFoundException();
+        }
+    }
+
+    @Transactional
+    public Fruit update(Long id, FruitFormDTO fruitForm) {
+        Fruit fruit = Fruit.findById(id);
+
+        if(fruit != null){
+            fruit.setName(fruitForm.getName()) ;
+            fruit.setQuantity(fruitForm.getQuantity());
+            fruit.persist();
+            return fruit;
+        } else {
+            throw new NotFoundException();
+        }
     }
 }
